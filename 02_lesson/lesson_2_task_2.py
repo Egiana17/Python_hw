@@ -1,10 +1,7 @@
 def is_year_leap(year):
-Args:
-year(int): Год для проверки
-returns:
-bool: True если год високосный,
-False если нет
-if year %4 == 0:
-return True
-else: 
-return False
+    return "True" if year % 4 == 0 else False
+
+
+year = int(input('введите год для проверки: '))
+
+print(f"Год{year}-{is_year_leap(year)}")
