@@ -1,7 +1,14 @@
-From user import User
-def get_full_name():
-    return (f"name: {first_name} + {last_name}")
-my_user = User("Egiana", "Abysheva")
-print(my_user.first_name)
-print(my_user.last_name)
-print(get_full_name())
+class User:
+
+    def __init__(self, fname, lname):
+        self.first_name = fname
+        self.last_name = lname
+
+    def getfirst_name(self):
+        print("меня зовут ", self.first_name)
+
+    def getlast_name(self):
+        print("моя фамилия ", self.last_name)
+       
+    def get_full_name(self):
+        print(f"name: {self.first_name} {self.last_name}")

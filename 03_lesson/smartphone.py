@@ -1,6 +1,7 @@
-class smartphone:
-    def_init_(self, brand, model, numer):
-    self.brand=brand
-    self.model=model
-    self.numer=numer
+class Smartphone:
+
+    def __init__(self, brand, model, number):
+        self.brand = brand
+        self.model = model
+        self.number = number
     
