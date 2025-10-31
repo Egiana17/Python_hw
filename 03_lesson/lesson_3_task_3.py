@@ -2,10 +2,10 @@ from address import Address
 from mailing import Mailing
 
 address = Address("197350", "Санкт-Петербург", "пр.Королева", "60", "200")
-adress_to = Address("150150", "Баку", "Амираджаны", "22", "34")
+address_to = Address("150150", "Баку", "Амираджаны", "22", "34")
 
 mail = Mailing(
-    to_address=adress_to,
+    to_address=address_to,
     from_address=address, 
     cost=1000,
     track="12345678"

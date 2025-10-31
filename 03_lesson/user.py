@@ -4,10 +4,10 @@ class User:
         self.first_name = fname
         self.last_name = lname
 
-    def getfirst_name(self):
+    def get_first_name(self):
         print("меня зовут ", self.first_name)
 
-    def getlast_name(self):
+    def get_last_name(self):
         print("моя фамилия ", self.last_name)
        
     def get_full_name(self):
