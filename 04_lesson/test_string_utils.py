@@ -45,40 +45,40 @@ def test_trim_negative(input_str, expected):
 
 
 @pytest.mark.positive
-@pytest.mark.parametrize("input_str, expected", [
-    ("skypro", "s"),
-    ("hello world", "o"),
-    ("python", "p"),
+@pytest.mark.parametrize("input_str, symbol_str, expected", [
+    ("skypro", "s", True),
+    ("hello world", "o", True),
+    ("python", "p", True),
 ])
-def test_contains_positive(input_str, expected):
-    assert string_utils.contains(input_str) == expected
+def test_contains_positive(input_str, symbol_str, expected):
+    assert string_utils.contains(input_str, symbol_str) == expected
 
 
 @pytest.mark.negative
-@pytest.mark.parametrize("input_str, expected", [
-    ("SkyPro", "a"),
-    ("123", "7"),
-    ("privet ", "z"),
+@pytest.mark.parametrize("input_str, symbol_str, expected", [
+    ("SkyPro", "a", False),
+    ("", "7", False),
+    ("privet ", "z", False),
 ])
-def test_contains_negative(input_str, expected):
-    assert string_utils.contains(input_str) == expected
+def test_contains_negative(input_str, symbol_str, expected):
+    assert string_utils.contains(input_str, symbol_str) == expected
 
 
 @pytest.mark.positive
-@pytest.mark.parametrize("input_str, expected", [
-    ("skypro", "s"),
-    ("hello world", "o"),
-    ("python", "p"),
+@pytest.mark.parametrize("input_str, symbol_str, expected", [
+    ("skypro", "s", "kypro"),
+    ("hello world", "o", "hell wrld"),
+    ("python", "p", "ython"),
 ])
-def test_delete_symbol_positive(input_str, expected):
-    assert string_utils.delete_symbol(input_str) == expected
+def test_delete_symbol_positive(input_str, symbol_str, expected):
+    assert string_utils.delete_symbol(input_str, symbol_str) == expected
 
 
 @pytest.mark.negative
-@pytest.mark.parametrize("input_str, expected", [
-    ("SkyPro", "a"),
-    ("123", "7"),
-    ("privet ", "z"),
+@pytest.mark.parametrize("input_str, symbol_str, expected", [
+    ("SkyPro", "a", "SkyPro"),
+    ("", "7", ""),
+    ("privet ", "z", "privet "),
 ])
-def test_delete_symbol_negative(input_str, expected):
-    assert string_utils.delete_symbol(input_str) == expected
+def test_delete_symbol_negative(input_str, symbol_str, expected):
+    assert string_utils.delete_symbol(input_str, symbol_str) == expected
