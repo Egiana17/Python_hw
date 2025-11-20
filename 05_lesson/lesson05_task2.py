@@ -7,5 +7,5 @@ driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install())
 
 driver.get("http://uitestingplayground.com/dynamicid")
 
-search_input = driver.find_element(By.CSS, '/html/body/section/div/button')
-search_input.click()
+driver.find_element(By.CSS_SELECTOR, ".btn.btn-primary").click()
+driver.quit()
