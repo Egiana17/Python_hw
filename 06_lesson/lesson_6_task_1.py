@@ -8,15 +8,23 @@ from selenium.webdriver.support import expected_conditions as EC
 driver = webdriver.Chrome(
 service=ChromeService(ChromeDriverManager().install()))
 
-driver.get(http://uitestingplayground.com/ajax)
+driver.get("http://uitestingplayground.com/ajax")
 
-button = driver.find_element(By.CSS_SELECTOR,"#ajaxaButton")
+button = driver.find_element(By.ID,"#ajaxButton")
 
 button.click()
 
-wait = WebDriverWait(driver, 20, 0.1)
-txt = wait.until(
-    EC.text_to_be_present_in_element (
-        (By.CSS_SELECTOR, "p.bg-success"),
-        "Data loaded with AJAX get request.")
+wait = WebDriverWait(driver, 20, poll_frequency=0.1)
+try:
+    txt = wait.until(
+    EC.visibility_of_element_located((By.CSS_SELECTOR, ".bg-success"))
     )
+    
+    if "Data loaded with AJAX get request." in txt.text:
+        print("AJAX запрос успешно выполнен!")
+    else:
+        print("Ошибка загрузки данных.")
+except Exception as e:
+    print(f"Произошла ошибка: {e}")
+    driver.quit()
+    
