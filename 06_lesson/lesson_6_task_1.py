@@ -10,7 +10,7 @@ service=ChromeService(ChromeDriverManager().install()))
 
 driver.get("http://uitestingplayground.com/ajax")
 
-button = driver.find_element(By.ID,"#ajaxButton")
+button = driver.find_element(By.ID,"ajaxButton")
 
 button.click()
 
@@ -25,6 +25,7 @@ try:
     else:
         print("Ошибка загрузки данных.")
 except Exception as e:
-    print(f"Произошла ошибка: {e}")
+    try:
+     driver.get("http://uitestingplayground.com/ajax")
+    finally:
     driver.quit()
-    
