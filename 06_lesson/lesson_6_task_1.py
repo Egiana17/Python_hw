@@ -5,18 +5,25 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-driver = webdriver.Chrome(
-service=ChromeService(ChromeDriverManager().install()))
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
-driver.get(http://uitestingplayground.com/ajax)
+try:
+  driver.get("http://uitestingplayground.com/ajax")
 
-button = driver.find_element(By.CSS_SELECTOR,"#ajaxaButton")
-
+button = driver.find_element(By.ID,"ajaxButton")
 button.click()
 
-wait = WebDriverWait(driver, 20, 0.1)
-txt = wait.until(
-    EC.text_to_be_present_in_element (
-        (By.CSS_SELECTOR, "p.bg-success"),
-        "Data loaded with AJAX get request.")
-    )
+wait = WebDriverWait(driver, 10)
+
+wait.until(
+   EC.text_to_be_present_in_element((By.ID, "content"),"Data loaded with AJAX")
+)
+content = driver.find_element(By. ID, "content")
+print(content.text)
+
+except Exception as e:
+print(f"Произошла ошибка: {e}")
+try:
+        driver.get("http://uitestingplayground.com/ajax")
+finally:
+        driver.quit()
