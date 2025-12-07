@@ -10,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 def test_buttons():
     driver = webdriver.Edge(EdgeChromiumDriverManager().install())
     driver = webdriver.Edge(service=EdgeService(options))
-    driver.get( https://bonigarcia.dev/selenium-webdriver-java/data-types.html)
+    driver.get(https://bonigarcia.dev/selenium-webdriver-java/data-types.html)
                
     wait = WebdriverWait(driver, 7)
    
