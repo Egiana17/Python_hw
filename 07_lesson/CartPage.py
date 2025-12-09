@@ -8,9 +8,9 @@ class CartPage:
         self.driver = driver
         self.wait = WebDriverWait(driver, 10)
 
-    def cklick_chekout(self):
+    def click_cheсkout(self):
 
         checkout_button = self.wait.until(
             EC.element_to_be_clickable((By.ID, "checkout")))
         checkout_button.click()
-        
+    wait_for_page_load(self)
