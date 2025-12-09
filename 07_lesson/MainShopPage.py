@@ -7,11 +7,22 @@ class MainShopPage:
         self.driver = driver
         self.wait = WebDriverWait(driver, 10)
 
-    def click_cheсkout(self):
+    def wait_for_page_load(self)
+        self.wait.until(EC.presence_of_all_elements_located(
+            (By.CSS_SELECTOR, "inventory_list")))    
 
-        checkout_button = self.wait.until(
-            EC.element_to_be_clickable((By.ID, "checkout")))
-        checkout_button.click()
+    def wait_for_page_load(self)
+        self.wait.until(EC.presence_of_all_elements_located(
+            (By.CSS_SELECTOR, "inventory_list")))
+    def add_product_to_cart(self, product_name):
+        product_xrath = (
+            f"//div[text()='{product_name}']/"
+            "ancestor:div[@class='inventory_item']//button")
+        product_button = self.driver.find_element(By.XPATH, product_xrath)
+        product_button.click()
 
-add_product_to_cart(self, product_name) 
-go_to_cart(self)
+    def go_to_cart(self)
+        cart_icon = self.driver.find.element(
+            By.CSS_SELECTOR, ".shopping_cart_link")
+        cart_icon.click()
+        
