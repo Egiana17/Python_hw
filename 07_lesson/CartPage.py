@@ -15,7 +15,7 @@ class CartPage:
         checkout_button.click()
     self.wait_for_page_load()
 
-def wait_for_page_load(self)
+    def wait_for_page_load(self):
     self.wait.until(
         EC.presence_of_all_elements_located((By.ID, "cart_contents"))
     )

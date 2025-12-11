@@ -7,11 +7,11 @@ class MainShopPage:
         self.driver = driver
         self.wait = WebDriverWait(driver, 10)
 
-    def wait_for_page_load(self)
+    def wait_for_page_load(self):
         self.wait.until(EC.presence_of_all_elements_located(
             (By.CSS_SELECTOR, "inventory_list")))    
 
-    def wait_for_page_load(self)
+    def wait_for_page_load(self):
         self.wait.until(EC.presence_of_all_elements_located(
             (By.CSS_SELECTOR, "inventory_list")))
     def add_product_to_cart(self, product_name):
