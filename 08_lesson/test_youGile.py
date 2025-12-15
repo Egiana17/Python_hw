@@ -10,12 +10,16 @@ def test_kreat_progect_positive():
     body = {"title": "Учебный проект"}
     response = requests.post(f"{base_url}/api-v2/projects", headers=headers, json=body)
     assert response.status_code == 201
+    response_json = response.json()
+    assert response_json['title'] == 'Учебный проект'
 
 def test_kreat_progect_negative():
     headers = {"Authorization": "Bearer "}
     body = {"title": "Учебный проект"}
     response = requests.post(f"{base_url}/api-v2/projects", headers=headers, json=body)
     assert response.status_code == 401
+    error_response = response.json()
+
 
 def test_apdet_progect_positive():
     headers = {"Authorization": f"Bearer {key}"}
