@@ -7,7 +7,7 @@ db_connection_string = "postgresgl://postgres@localhost:5432/postgres"
 @pytest.fixture()
 def db_connection():
     engine = create_engine(db_connection_string)
-    connection = engine.connect
+    connection = engine.connect()
     transaction = connection.begin()
     yield connection
     transaction.rollback()
