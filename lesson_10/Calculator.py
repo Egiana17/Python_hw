@@ -3,100 +3,53 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import allure
 
-class CalculatorPage:
+class CalcMainPage:
+    """"
+        Класс для работы с главной страницей калькулятора.
+        Этот класс предоставляет методы для взаимодействия с калькулятором,
+        включает установку задержки, нажатие кнопок, ожидание результата и
+        получение результата.
     """
-    Класс для взаимодействия с страницей калькулятора.
-    """
+
 
     def __init__(self, driver):
-        """
-        Инициализация объекта страницы калькулятора.
-
-        :param driver: webdriver, экземпляр Selenium WebDriver
-        :type driver: selenium.webdriver.remote.webdriver.WebDriver
-        """
         self.driver = driver
-        self.waiter = WebDriverWait(driver, 30)
+        self.wait = WebDriverWait(driver, 45)
 
-    @allure.step("Открытие страницы по URL: {url}")
-    def open(self, url: str) -> None:
-        """
-        Открывает страницу калькулятора по указанному URL.
+    @allure.step("Открывает страницу калькулятора в браузере по заданному URL")
+    def open(self) -> None:
+        self.driver.get("https://bonigarcia.dev/selenium-webdriver-java/"
+                        "slow-calculator.html")
 
-        :param url: URL страницы
-        :type url: str
-        :return: None
-        """
-        self.driver.get(url)
-        self.driver.maximize_window()
-
-    @allure.step("Установка задержки: {delay}")
-    def set_delay(self, delay: str) -> None:
-        """
-        Устанавливает задержку ввода.
-
-        :param delay: Значение задержки (строка)
-        :type delay: str
-        :return: None
-        """
-        delay_input = self.driver.find_element(By.CSS_SELECTOR, "#delay")
+    @allure.step("Устанавливает {delay} секунд задержки в поле ввода")
+    def set_delay(self, delay: int) -> None:
+        delay_input = self.driver.find_element(By.ID, "delay")
         delay_input.clear()
         delay_input.send_keys(delay)
 
-    @allure.step("Клик по кнопке с текстом: {button_text}")
-    def click_button(self, button_text: str) -> None:
-        """
-        Нажимает на кнопку по её тексту.
+    @allure.step("Нажимает кнопку {button} калькулятора "
+                 "по её текстовому содержимому")
+    def click_button(self, button: str) -> None:
+        self.driver.find_element(
+            By.XPATH, f"//span[text()='{button}']").click()
 
-        :param button_text: Текст кнопки
-        :type button_text: str
-        :return: None
-        """
-        self.driver.find_element(By.XPATH, f"//span[text()='{button_text}']").click()
+    @allure.step("Последовательно нажимает кнопки {buttons} калькулятора")
+    def click_buttons(self, buttons: list[str]) -> None:
+        for button in buttons:
+            self.click_button(button)
 
-    @allure.step("Ожидание появления текста: {expected_text}")
-    def wait_for_result(self, expected_text: str) -> None:
-        """
-        Ждет, пока текст `expected_text` появится в элементе с селектором '.screen'.
+    @allure.step("Ожидает появления ожидаемого результата "
+                 "на экране калькулятора. Добавляет к задержке "
+                 "в {delay} секунд +1 секунду для надежности")
+    def wait_for_result(self, expected_result: str, delay: int) -> None:
+        # Добавляем +1 секунду к задержке для надежности
+        WebDriverWait(self.driver, delay + 1).until(
+            EC.text_to_be_present_in_element((
+                By.CLASS_NAME, "screen"), expected_result)
+        )
 
-        :param expected_text: Ожидаемый текст
-        :type expected_text: str
-        :return: None
-        """
-        self.waiter.until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, '.screen'), expected_text))
-
-    @allure.step("Получение текста результата")
+    @allure.step("Получает и возвращает значение результата "
+                 "с экрана калькулятора")
     def get_result(self) -> str:
-        """
-        Получает текст из элемента с селектором '.screen'.
-
-        :return: Текст результата
-        :rtype: str
-        """
-        return self.driver.find_element(By.CSS_SELECTOR, '.screen').text
-
-
-import pytest
-import allure
-from calculator_page import CalculatorPage
-
-@allure.title("Тест проверки сложения")
-@allure.description("Проверка правильности выполнения операции сложения в калькуляторе.")
-@allure.feature("Калькулятор")
-@allure.severity(allure.severity_level.CRITICAL)
-def test_addition():
-    # Предполагается, что драйвер и URL передаются или создаются заранее
-    driver = ...  # Инициализация WebDriver
-    page = CalculatorPage(driver)
-    with allure.step("Открываем страницу калькулятора"):
-        page.open("http://example.com")
-    with allure.step("Вводим задержку '1'"):
-        page.set_delay("1")
-    with allure.step("Кликаем кнопку '+'"):
-        page.click_button("+")
-    with allure.step("Проверяем результат равен '3'"):
-        page.wait_for_result("3")
-        result = page.get_result()
-        with allure.step(f"Проверяем, что результат '{result}' равен '3'"):
-            assert result == "3"
-    driver.quit()
+        return self.driver.find_element(By.CLASS_NAME, "screen").text
+    
